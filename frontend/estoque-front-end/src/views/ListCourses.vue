@@ -1,0 +1,126 @@
+<script setup>
+import { onMounted, ref } from 'vue'
+import CoursesTable from '../components/CoursesTable.vue'
+
+const cursos = ref([])
+const carregando = ref(true)
+const erro = ref('')
+
+function formatarData(valor) {
+  if (!valor) return '-'
+
+  const data = new Date(valor)
+
+  if (Number.isNaN(data.getTime())) return valor
+
+  return new Intl.DateTimeFormat('pt-BR', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  }).format(data)
+}
+
+async function carregarCursos() {
+  carregando.value = true
+  erro.value = ''
+
+  try {
+    const resposta = await fetch('/curso/cursos')
+
+    if (!resposta.ok) {
+      throw new Error('Nao foi possivel carregar os cursos.')
+    }
+
+    const dados = await resposta.json()
+    cursos.value = Array.isArray(dados) ? dados : []
+  } catch (error) {
+    erro.value = error instanceof Error ? error.message : 'Erro inesperado ao carregar cursos.'
+  } finally {
+    carregando.value = false
+  }
+}
+
+onMounted(carregarCursos)
+</script>
+
+<template>
+  <main class="page">
+    <section class="page-header">
+      <div>
+        <h1>Cursos</h1>
+      </div>
+
+      <div class="buttons">
+        <button type="button" @click="carregarCursos" :disabled="carregando">
+          {{ carregando ? 'Carregando...' : 'Atualizar' }}
+        </button>
+        <button type="button">
+          Criar curso
+        </button>
+      </div>
+    </section>
+
+    <CoursesTable
+      :cursos="cursos"
+      :carregando="carregando"
+      :erro="erro"
+      :formatar-data="formatarData"
+    />
+  </main>
+</template>
+
+<style scoped>
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 2rem;
+}
+
+p {
+  margin: 0;
+  color: #555;
+}
+
+.buttons {
+  display: flex;
+  gap: 2em;
+}
+
+button {
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  padding: 10px 16px;
+  background: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+code {
+  background: #f3f3f3;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+@media (max-width: 640px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>

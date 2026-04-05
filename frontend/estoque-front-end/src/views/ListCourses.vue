@@ -53,9 +53,7 @@ onMounted(carregarCursos)
         <button type="button" @click="carregarCursos" :disabled="carregando">
           {{ carregando ? 'Carregando...' : 'Atualizar' }}
         </button>
-        <button type="button">
-          Criar curso
-        </button>
+        <RouterLink class="create-link" to="/create">Criar curso</RouterLink>
       </div>
     </section>
 
@@ -95,7 +93,8 @@ p {
 
 .buttons {
   display: flex;
-  gap: 2em;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 button {
@@ -104,6 +103,18 @@ button {
   padding: 10px 16px;
   background: #fff;
   cursor: pointer;
+}
+
+.create-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #1d4ed8;
+  border-radius: 6px;
+  padding: 10px 16px;
+  background: #1d4ed8;
+  color: #fff;
+  text-decoration: none;
 }
 
 button:disabled {

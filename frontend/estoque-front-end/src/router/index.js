@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import CreateCourse from '../views/CreateCourse.vue'
 import ListCourses from '../views/ListCourses.vue'
 
 const router = createRouter({
@@ -13,6 +14,12 @@ const router = createRouter({
       name: 'home',
       component: ListCourses,
     }
+    ,
+    {
+      path: '/create',
+      name: 'create',
+      component: CreateCourse,
+    },
   ],
 })
 

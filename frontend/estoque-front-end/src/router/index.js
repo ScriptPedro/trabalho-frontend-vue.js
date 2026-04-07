@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CreateCourse from '../views/CreateCourse.vue'
 import ListCourses from '../views/ListCourses.vue'
+import EditCourse from '../views/EditCourse.vue' // 👈 ADICIONAR
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,12 +14,16 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: ListCourses,
-    }
-    ,
+    },
     {
       path: '/create',
       name: 'create',
       component: CreateCourse,
+    },
+    {
+      path: '/curso/editar/:id', // 👈 NOVA ROTA
+      name: 'edit',
+      component: EditCourse,
     },
   ],
 })

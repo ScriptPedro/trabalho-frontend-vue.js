@@ -12,13 +12,6 @@ const curso = reactive({
   active: true,
 })
 
-const payloadExemplo = `{
-  "name": "Angular",
-  "category": "Frontend",
-  "active": true,
-  "professor": "Ciclano"
-}`
-
 function limparFormulario() {
   curso.name = ''
   curso.category = ''
@@ -103,19 +96,6 @@ async function criarCurso() {
           <button type="button" class="ghost" @click="limparFormulario">Limpar</button>
         </div>
       </form>
-
-      <aside class="card example-card">
-        <h2>Payload esperado</h2>
-        <p>Esse e o formato que o backend recebe em <strong>/curso/create</strong>.</p>
-
-        <pre>{{ payloadExemplo }}</pre>
-
-        <div class="meta-list">
-          <span>POST /curso/create</span>
-          <span>Persistencia no PostgreSQL</span>
-          <span>Campo active opcional</span>
-        </div>
-      </aside>
     </section>
   </main>
 </template>
@@ -124,6 +104,9 @@ async function criarCurso() {
 .page {
   display: grid;
   gap: 24px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 10px 24px 32px 56px;
 }
 
 .page-header {
@@ -134,16 +117,16 @@ async function criarCurso() {
 }
 
 .eyebrow {
-  margin: 0 0 6px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #5c6b80;
+  color: #1d4ed8;
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
 }
 
-h1,
-h2 {
+h1 {
   margin: 0;
   color: #1e293b;
 }
@@ -154,9 +137,7 @@ h2 {
 }
 
 .layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.8fr);
-  gap: 20px;
+  display: block;
 }
 
 .card {
@@ -269,45 +250,11 @@ button.ghost {
   background: #fff;
 }
 
-.example-card {
-  padding: 24px;
-  display: grid;
-  gap: 14px;
-}
-
-.example-card p {
-  margin: 0;
-  color: #5b6577;
-}
-
-pre {
-  margin: 0;
-  padding: 16px;
-  border-radius: 14px;
-  background: #0f172a;
-  color: #e2e8f0;
-  overflow-x: auto;
-}
-
-.meta-list {
-  display: grid;
-  gap: 8px;
-}
-
-.meta-list span {
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: #f8fafc;
-  color: #334155;
-}
-
-@media (max-width: 960px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 720px) {
+  .page {
+    padding: 8px 16px 24px;
+  }
+
   .page-header {
     flex-direction: column;
     align-items: flex-start;
